@@ -1,0 +1,11 @@
+const reviewController = require('./../controllers/reviewController')
+const authControler = require("./../controllers/authControler")
+const express = require("express")
+const router = express.Router({ mergeParams: true })
+router.use(authControler.checkLog)
+router.route('/').post(reviewController.setParaReview, reviewController.createReview)
+router.route('/').get(reviewController.getReviews)
+router.route('/:id').delete(authControler.restrictTo("admin"), reviewController.deleteReview)
+.patch(authControler.restrictTo("admin"), reviewController.updateReview)
+.get(reviewController.getReviewById)
+module.exports = router
