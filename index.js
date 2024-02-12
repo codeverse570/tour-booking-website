@@ -106,7 +106,7 @@ mongoose.connect("mongodb+srv://patel36:neeraj@cluster0.gblkjv7.mongodb.net/?ret
     // console.log(con)
     console.log("DB connection successful")
 })
-// checking 
+// check
 app.use('/', viewsroute)
 app.use('/api/user', Userroute);
 app.use('/api/review', reviewroute);
