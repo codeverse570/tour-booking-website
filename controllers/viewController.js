@@ -40,7 +40,7 @@ const getMe = catchAsync(async (req, res, next) => {
 const bookedTours=catchAsync(async(req,res,next)=>{
     const booked=await Booking.find({user:req.user._id})
      const tours= booked.map((el)=>el.tour)
-     console.log(tours)
+
     if(booked)
      res.status(200).render('overview',{
     title:"my-tours",

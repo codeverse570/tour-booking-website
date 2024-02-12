@@ -16,7 +16,7 @@ const signUp = catchAsync(async (req, res, next) => {
     secure: true,
     httpOnly: true
   })
-  await new Email(newUser,`http://127.0.0.1:3000/me`).sendWelcomeEmail();
+  await new Email(newUser, `http://127.0.0.1:3000/me`).sendWelcomeEmail();
   res.status(201).json({
     message: "success",
     token,
@@ -31,9 +31,9 @@ const logIn = catchAsync(async (req, res, next) => {
   }
   else {
     const user = await User.findOne({ email }).select("+password")
-    if(!user) next(new appError("failed","Email does not exist!"))
+    if (!user) next(new appError("failed", "Email does not exist!"))
     const correct = user.correctPassword(user.password, password)
-    console.log(user)
+
 
     if (user && await correct) {
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
@@ -63,7 +63,7 @@ const logIn = catchAsync(async (req, res, next) => {
 const checkLog = catchAsync(async (req, res, next) => {
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
-    console.log(req.headers)
+
     token = req.headers.authorization.split(" ")[1]
   }
   else if (req.cookies.jwt) {
@@ -74,7 +74,7 @@ const checkLog = catchAsync(async (req, res, next) => {
     const payload = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY)
     const newUser = await User.findOne({ _id: payload.id })
     if (newUser) {
-      console.log(payload)
+
       req.user = newUser
       if (!newUser.isPassUpdate(payload.iat)) next()
       else next(new appError("failed", "Password is Changed please log in again!"))
@@ -101,7 +101,7 @@ const isLogIn = catchAsync(async (req, res, next) => {
 
   if (!newUser) return next()
   if (newUser.isPassUpdate(payload.iat)) return next()
-  console.log(newUser)
+    .log(newUser)
   res.locals.user = newUser
   next()
 
@@ -129,7 +129,7 @@ const forgetPassword = catchAsync(async (req, res, next) => {
 
   const resetUrl = `${req.protocol}://${req.hostname}:3000/api/user/resetpassword/${token}`
   try {
-    await new Email(user,resetUrl).sendResetPassword()
+    await new Email(user, resetUrl).sendResetPassword()
     res.status(200).json({
       status: "success",
       message: "Reset your password using the link"
@@ -185,22 +185,20 @@ const changePassword = catchAsync(async (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1]
   }
-  else if(req.cookies.jwt){
-     token=req.cookies.jwt
+  else if (req.cookies.jwt) {
+    token = req.cookies.jwt
   }
   if (token) {
     const payload = await promisify(jwt.verify)(token, process.env.JWT_SECRET_KEY)
     const newUser = await User.findOne({ _id: payload.id }).select('+password')
     if (newUser) {
       req.user = newUser
-      console.log(newUser.password)
       const correct = await newUser.correctPassword(newUser.password, currentPassword)
-      console.log(correct)
       if (!correct) next(new appError("failed", "current password is not correct!"))
       if (!newUser.isPassUpdate(payload.iat)) {
         newUser.password = password
         newUser.passwordConfirm = passwordConfirm
-        
+
         await newUser.save()
         res.status(200).json({
           message: "success",
@@ -218,22 +216,22 @@ const changePassword = catchAsync(async (req, res, next) => {
     next(new appError("failed", "you are not logged in please log in to get access"))
   }
 })
-const logOut= (req,res,next)=>{
+const logOut = (req, res, next) => {
   res.cookie('jwt', "", {
     expires: new Date(Date.now() + 10000),
     secure: true,
     httpOnly: true
   })
   res.json({
-    status:"success"
+    status: "success"
   })
 }
-module.exports.logOut=logOut
+module.exports.logOut = logOut
 module.exports.signUp = signUp
 module.exports.logIn = logIn
 module.exports.checkLog = checkLog
 module.exports.restrictTo = restrictTo
 module.exports.forgetPassword = forgetPassword
 module.exports.resetPassword = resetPassword
-module.exports.isLogIn=isLogIn
+module.exports.isLogIn = isLogIn
 module.exports.changePassword = changePassword

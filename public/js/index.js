@@ -9,7 +9,7 @@ if (form) {
         e.preventDefault()
         let email = document.getElementById("email").value
         let password = document.getElementById("password").value
-        console.log(email, password)
+    
         logIn(email, password)
     })
 }
@@ -43,7 +43,7 @@ const passwordForm = document.getElementById('password-form')
 if (passwordForm) {
     // console.log("hello")
     passwordForm.addEventListener("submit", (e) => {
-        console.log('hello')
+      
         e.preventDefault()
 
         const currentPassword = document.getElementById("password-current")

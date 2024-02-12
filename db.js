@@ -13,7 +13,7 @@ mongoose.connect("mongodb+srv://patel36:neeraj@cluster0.gblkjv7.mongodb.net/?ret
     useCreateIndex: true,
     useFindAndModify: false
 }).then(con => {
-    // console.log(con)
+    // console.log(con) 
     console.log("DB connection successful")
 })
 const addDB = async () => {

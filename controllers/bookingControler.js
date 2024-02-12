@@ -5,8 +5,6 @@ const Booking=require("./../models/bookingSchema")
 const factory=require("./../controllers/factoryController")
 const getPaymentSession= catchAsync(async(req,res,next)=>{
          const tour= await Tour.findById(req.params.tourId)
-        //  console.log(stripe)
-        console.log(tour)
         const product = await stripe.products.create({
             name: `${tour.name} Tour`,
             description: tour.summary,
@@ -40,14 +38,14 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
 })
 const createBooking= catchAsync(async(req,res,next)=>{
   const {tour,user,price}= req.query
-  console.log(req.query)
+
    if(tour&&user&&price){
        const booking=  await Booking.create({
           tour,
           user,
           price
          })
-         console.log(booking)
+
    }
   next();
 })

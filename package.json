@@ -8,7 +8,8 @@
     "start": " nodemon test.js",
     "start:pro": "SET NODE_ENV=production nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
+    "build:js":"parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "author": "Niraj patel",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "alert": "^6.0.1",
     "axios": "^1.6.7",
     "bcryptjs": "^2.4.3",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cookieparser": "^0.1.0",
     "dotenv": "^16.3.1",

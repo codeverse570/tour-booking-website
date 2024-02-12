@@ -41,7 +41,7 @@ const createDoc= model=>  catchAsync(async (req, res) => {
  )
  const getOne= (model,popOptions)=> catchAsync(async (req, res,next) => {
     let id = req.params.id;
-    console.log(id)
+
     let query =   model.findById(id)
     if((popOptions)) query.populate(popOptions)
     let doc= await query

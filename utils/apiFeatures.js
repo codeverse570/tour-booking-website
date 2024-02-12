@@ -22,7 +22,6 @@ class apiFeatures{
     }
     fields(){
         let queryobj=JSON.parse(this.queryString)
-        console.log(queryobj.fields)
         if(queryobj.fields){
             this.tours=this.tours.select(queryobj.fields.replaceAll(","," "))
         }

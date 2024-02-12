@@ -21,7 +21,7 @@ const upload = multer({
 
 const uploadPhoto = upload.single("photo")
 module.exports.resizeImage = (req, res, next) => {
-  console.log(req.file)
+
   const filename = `user-${req.user._id}-${Date.now()}.jpeg`
 
   if (!req.file) return next()
@@ -45,7 +45,7 @@ const getMe = (req, res, next) => {
 const getOneUser = factoryController.getOne(User)
 const updateMe = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ _id: req.user._id })
-  console.log(req.file)
+
   if (req.file) req.body.photo = req.file.filename
   if (user) {
     if (req.body.password) {

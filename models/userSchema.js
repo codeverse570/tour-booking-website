@@ -76,7 +76,7 @@ userSchema.pre('find',function(next){
      next()
 })
 userSchema.pre('save',function(next){
-    // console.log(this.isNew)
+
      if(!this.isModified('password')||(this.isNew)) return next()
       this.passwordChangedAt=Date.now()
       next()

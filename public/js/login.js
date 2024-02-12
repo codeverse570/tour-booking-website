@@ -1,7 +1,7 @@
 import axios from "axios"
 import { showAlert } from "./alert"
 export const logIn = async (email, password) => {
-    console.log(email, password)
+  
     try {
         const res = await axios({
             method: "Post",
@@ -24,7 +24,7 @@ export const logIn = async (email, password) => {
 
 }
 export const logout = async () => {
-    console.log("logout")
+   
     try {
         let res = await axios({
             method: "GET",

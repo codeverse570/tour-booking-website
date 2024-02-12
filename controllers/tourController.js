@@ -25,7 +25,7 @@ const uploadPhoto = upload.fields([
   { name: "images", maxCount: 3 }
 ])
 const resizeTourImages = catchAsync(async (req, res, next) => {
-  console.log(req.files)
+
   if (!req.files.images || !req.files.imageCover) return next()
   if (req.files.images.length < 3) return next(new appError("failed", "please provide atleast three images for tour"))
   let imageCoverName = `tour-${req.params.id}-${Date.now()}-cover.jpg`
@@ -37,7 +37,7 @@ const resizeTourImages = catchAsync(async (req, res, next) => {
     await sharp(img.buffer).resize(1000, 700).toFormat("jpeg").jpeg({ quality: 100 }).toFile(`public/img/tours/${image}`)
     return image
   }))
-  console.log(images)
+
 
   req.body.images = images
   next()
@@ -82,7 +82,7 @@ const getEmployee = factoryController.getAll(employee)
 const addEmployee = factoryController.createDoc(employee)
 const postmiddle = (req, res, next) => {
   const emp = req.body
-  console.log(emp.employee.salary > 100000)
+
   if (emp.employee.salary > 100000) {
     return res.json({
       message: "bad request"
@@ -97,7 +97,7 @@ const getMontlyPlan = catchAsync(async (req, res) => {
 
 
   let year = req.params.year * 1
-  //   console.log(new Date(`${year}-07-31`)>new Date("2021-08-18T09:00:00.000Z"))
+
   let monthly = await employee.aggregate([
 
     {
@@ -141,7 +141,7 @@ const distances = catchAsync(async (req, res, next) => {
   const unit = req.params.unit
   if (!longi || !lati) return next(new appError("failed", "please specify the coordinate of center"))
 
-  console.log(longi, lati)
+
   const tour = await employee.aggregate([
     {
       $geoNear: {
@@ -162,17 +162,17 @@ const tourWithin = catchAsync(async (req, res, next) => {
   const [longi, lati] = req.params.cord.split(',')
   const distance = req.params.distance
   const unit = req.params.unit
-  console.log(longi, lati, distance)
+
   let radius;
   if (unit == 'mi') {
     radius = distance / 3963.2
   } else {
     radius = distance / 6378.1
   }
-  console.log(radius)
+
   if (!longi || !lati) return next(new appError("failed", "please specify the coordinate of center"))
   const tour = await employee.find({ startLocation: { $geoWithin: { $centerSphere: [[lati, longi], radius] } } })
-  console.log(tour)
+
   res.status(200).json({
     message: "success",
     length: tour.length,

@@ -2,7 +2,7 @@ import { showAlert } from "./alert"
 import { logout } from "./login"
 import axios from "axios"
 export const updateUser = async (data) => {
-    console.log(data)
+    
     try {
         const res = await axios({
             method: "PATCH",
