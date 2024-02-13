@@ -10,7 +10,7 @@
     "start:pro": "SET NODE_ENV=production nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:js": "parcel watch ./public/js/index.js --out-dir ./public/js --out-file bundle.js",
-    "build:js":"parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
+    "build:js": "parcel build ./public/js/index.js --out-dir ./public/js --out-file bundle.js"
   },
   "author": "Niraj patel",
   "license": "ISC",
@@ -22,6 +22,7 @@
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cookieparser": "^0.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express-mongo-sanitize": "^2.2.0",
     "express-rate-limit": "^7.1.5",

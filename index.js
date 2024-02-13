@@ -2,6 +2,7 @@ const dotenv = require('dotenv')
 const express = require("express")
 dotenv.config({ path: './config.env' })
 const fs = require('fs');
+const cors= require("cors")
 const rateLimiter = require('express-rate-limit')
 const morgan = require("morgan");
 const app = express();
@@ -75,7 +76,7 @@ app.use(
       },
     })
   );
-  
+app.use(cors())
 app.use(morgan("tiny"))
 app.use(xss())
 app.use(hpp({
