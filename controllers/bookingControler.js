@@ -40,9 +40,10 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
 const createBooking= async(data)=>{
   
   const tour= data.client_reference_id
-  const price=data.unit_amount/100
-  const user= (await User.findOne({email:data.customer_email}))
-  console.log(tour,price,user)
+  const price=data.amount_total/100
+  let user= (await User.findOne({email:data.customer_email}))
+  console.log("tour" ,tour)
+  console.log("price",price)
   user=user._id
    if(tour&&user&&price){
        const booking=  await Booking.create({
@@ -54,14 +55,14 @@ const createBooking= async(data)=>{
    }
 }
 const checkOut =catchAsync(async(req,res,next)=>{
-           console.log("entering checkout")
+          //  console.log("entering checkout")
            const signature=req.headers["stripe-signature"]
            console.log(signature,process.env.STRIPE_WEBHOOK_SECRET,req.body)
            const event= stripe.webhooks.constructEvent(req.body,signature,process.env.STRIPE_WEBHOOK_SECRET)
-           console.log(process.env.STRIPE_WEBHOOK_SECRET)
-           console.log("events ",event)
+          //  console.log(process.env.STRIPE_WEBHOOK_SECRET)
+          //  console.log("events ",event)
            if(event.type==="checkout.session.completed"){
-                    console.log("object ",event.data.object)
+                    // console.log("object ",event.data.object)
                    createBooking(event.data.object)
            }    
            res.status(200).json({
