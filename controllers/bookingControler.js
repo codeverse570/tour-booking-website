@@ -31,6 +31,9 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
                 quantity: 1,
               },
             ],
+            metadata:{
+              'tour_id': tour._id,
+            }
           });
          res.json({
             message:"success",
@@ -39,7 +42,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
 })
 const createBooking= async(data)=>{
   
-  const tour= data.client_reference_id
+  const tour= data.metadata.get("tour_id")
   const price=data.amount_total/100
   let user= (await User.findOne({email:data.customer_email}))
   console.log("tour" ,tour)
