@@ -38,12 +38,12 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
          })
 })
 const createBooking= async(data)=>{
-  console.log(data)
+  
   const tour= data.client_reference_id
+  const price=data.unit_amount/100
   const user= (await User.findOne({email:data.customer_email}))
+  console.log(tour,price,user)
   user=user._id
-  const price=data.line_items.price.unit_amount/100
-
    if(tour&&user&&price){
        const booking=  await Booking.create({
           tour,
