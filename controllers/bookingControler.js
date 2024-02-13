@@ -40,7 +40,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
 const createBooking= async(data)=>{
   const tour= data.client_reference_id
   const user= (await User.findOne({email:data.customer_email}))
-  user=user.id
+  user=user._id
   const price=data.line_items.price.unit_amount/100
 
    if(tour&&user&&price){
