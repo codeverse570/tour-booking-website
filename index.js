@@ -79,6 +79,7 @@ app.use(
     })
   );
 app.use(cors())
+app.options("*",cors())
 app.use(morgan("tiny"))
 app.use(xss())
 app.use(hpp({
