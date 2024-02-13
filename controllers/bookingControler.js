@@ -23,7 +23,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
             success_url: `${req.protocol}://${req.get('host')}/mytours?alert=booking`,
             cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
             customer_email: req.user.email,
-            client_reference_id: req.params.tourID,
+            client_reference_id: req.params.tourId,
             mode: 'payment',
             line_items: [
               {
@@ -31,9 +31,6 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
                 quantity: 1,
               },
             ],
-            metadata:{
-              'tour_id': tour._id,
-            }
           });
          res.json({
             message:"success",
@@ -42,7 +39,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
 })
 const createBooking= async(data)=>{
   
-  const tour= data.metadata.get("tour_id")
+  const tour= data.client_reference_id
   const price=data.amount_total/100
   let user= (await User.findOne({email:data.customer_email}))
   console.log("tour" ,tour)
