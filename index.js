@@ -43,6 +43,7 @@ app.use(
             'https://js.stripe.com',
             'https://m.stripe.network',
             'https://*.cloudflare.com',
+            'https://*.onrender.com'
           ],
           frameSrc: ["'self'", 'https://js.stripe.com'],
           objectSrc: ["'none'"],
@@ -54,7 +55,8 @@ app.use(
             'https://*.tiles.mapbox.com',
             'https://api.mapbox.com',
             'https://events.mapbox.com',
-            'https://m.stripe.network',
+            'https://m.stripe.network' ,
+            'https://*.onrender.com'
           ],
           childSrc: ["'self'", 'blob:'],
           imgSrc: ["'self'", 'data:', 'blob:'],
@@ -69,7 +71,7 @@ app.use(
             'https://*.cloudflare.com/',
             'https://bundle.js:*',
             'ws://127.0.0.1:*/',
-   
+            'https://*.onrender.com'
           ],
           upgradeInsecureRequests: [],
         },
