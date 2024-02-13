@@ -38,6 +38,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
          })
 })
 const createBooking= async(data)=>{
+  console.log(data)
   const tour= data.client_reference_id
   const user= (await User.findOne({email:data.customer_email}))
   user=user._id
