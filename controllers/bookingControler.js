@@ -30,7 +30,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
                 price: price.id,
                 quantity: 1,
               },
-            ],
+            ], 
           });
          res.json({
             message:"success",
