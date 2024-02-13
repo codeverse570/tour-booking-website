@@ -51,8 +51,10 @@ const bookedTours=catchAsync(async(req,res,next)=>{
      }
 })
 module.exports.checkAlert= (req,res,next)=>{
+    console.log(req.query)
         const alert= req.query.alert
-        if(alert) req.locals.alert=alert
+        console.log(req.locals)
+        if(alert) res.locals.alert=alert
         next()
 }
 module.exports.tour = tour

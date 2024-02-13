@@ -2,6 +2,7 @@ import { logIn, logout } from "./login"
 import { mapFun } from "./mapbox"
 import {bookTour} from "./stripe"
 import { updateUser, updatePassword } from "./updateUser"
+import { showAlert } from "./alert"
 import "@babel/polyfill"
 let form = document.querySelector("#form")
 if (form) {
@@ -60,7 +61,8 @@ if(bookBtn){
            e.target.innerText="Book Tour Now!"
      })
 }
-const alert= document.querySelector('body').alert
-if(alert){
+const alert= document.querySelector('body').dataset.alert
+// console.log(alert)
+if(alert==="booking"){
     showAlert("success","Congrats! Tour is booked")
 }
