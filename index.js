@@ -21,7 +21,7 @@ const cookieparse = require("cookie-parser")
 const xss = require("xss-clean")
 const hpp = require("hpp")
 const compression= require("compression")
-
+app.enable("trust proxy")
 app.use(express.json({ limit: '10kb' }))
 app.use(cookieparse())
 app.use(sanitize())
@@ -117,6 +117,12 @@ app.all("*", (req, res, next) => {
 })
 app.use(errorHandler)
 const port= process.env.port||3000
-app.listen(port, () => {
+const server=app.listen(port, () => {
     console.log("app is started");
 }) 
+process.on('SIGTERM',()=>{
+  console.log("sigterm received shutting down")
+  server.close(()=>{
+    console.log("process terminated!")
+  })
+})
