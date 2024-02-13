@@ -7,7 +7,7 @@ router.use(authController.isLogIn)
 router.get("/tour/:name", viewController.tour)
 router.get("/",viewController.overview)
 router.get("/login", viewController.logIn)
-router.get("/mytours",authController.checkLog,viewController.bookedTours)
+router.get("/mytours",authController.checkLog,viewController.checkAlert,viewController.bookedTours)
 router.get("/me", authController.checkLog, authController.isLogIn, viewController.getMe)
 
 module.exports = router

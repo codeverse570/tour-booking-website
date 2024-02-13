@@ -50,6 +50,11 @@ const bookedTours=catchAsync(async(req,res,next)=>{
         return next(new appError("No booked Tours! book one now"))
      }
 })
+module.exports.checkAlert= (req,res,next)=>{
+        const alert= req.query.alert
+        if(alert) req.locals.alert=alert
+        next()
+}
 module.exports.tour = tour
 module.exports.base = base
 module.exports.overview = overview

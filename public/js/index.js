@@ -60,3 +60,7 @@ if(bookBtn){
            e.target.innerText="Book Tour Now!"
      })
 }
+const alert= document.querySelector('body').alert
+if(alert){
+    showAlert("success","Congrats! Tour is booked")
+}

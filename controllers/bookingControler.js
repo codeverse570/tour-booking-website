@@ -20,7 +20,7 @@ const getPaymentSession= catchAsync(async(req,res,next)=>{
          
           const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
-            success_url: `${req.protocol}://${req.get('host')}/my-tour`,
+            success_url: `${req.protocol}://${req.get('host')}/mytours?alert=booking`,
             cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
             customer_email: req.user.email,
             client_reference_id: req.params.tourID,
@@ -54,14 +54,18 @@ const createBooking= async(data)=>{
    }
 }
 const checkOut =catchAsync(async(req,res,next)=>{
+           console.log("entering checkout")
            const signature=req.headers["stripe-signature"]
            const event= stripe.webhooks.constructEvent(req.body,signature,process.env.STRIPE_WEBHOOK_SECRET)
+           console.log(process.env.STRIPE_WEBHOOK_SECRET)
+           console.log("events ",event)
            if(event.type==="checkout.session.completed"){
+                    console.log("object ",event.data.object)
                    createBooking(event.data.object)
-           }
-           
-           
-
+           }    
+           res.status(200).json({
+                 recieved:"done"
+           })
 })
 module.exports.createOffBookings= factory.createDoc(Booking)
 module.exports.updateBookings=factory.updateDoc(Booking)
