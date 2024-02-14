@@ -23,14 +23,19 @@ const uploadPhoto = upload.single("photo")
 module.exports.resizeImage = (req, res, next) => {
 
   const filename = `user-${req.user._id}-${Date.now()}.jpeg`
-
+   console.log(req.file)
   if (!req.file) return next()
   req.file.filename = filename
   sharp(req.file.buffer).resize(500, 400, { fit: "fill" }).toFormat("jpeg").jpeg({ quality: 90 }).toFile(`public/img/users/${filename}`)
   next()
 }
 const filterUpdate = (parameters) => {
-  const filterBy = ["email", "name", "photo"]
+  let filterBy;
+  // console.log(parameters.photo)
+  
+  if(parameters.photo!=='undefined')  filterBy = ["email", "name", "photo"]
+  else filterBy = ["email", "name"]
+  console.log(filterBy)
   const newObj = {}
   Object.keys(parameters).forEach(el => {
     if (filterBy.includes(el)) newObj[el] = parameters[el]
@@ -53,6 +58,7 @@ const updateMe = catchAsync(async (req, res, next) => {
     }
     else {
       const filterBody = filterUpdate(req.body)
+      console.log(filterBody)
       const updatedUser = await User.findOneAndUpdate({ _id: user._id }, filterBody, { new: true })
       res.status(200).json({
         message: "Success",
