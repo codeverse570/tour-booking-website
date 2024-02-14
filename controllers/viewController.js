@@ -18,11 +18,18 @@ const base = (req, res, next) => {
 }
 const tour = catchAsync(async (req, res, next) => {
     const tour = await Tour.findOne({ slug: req.params.name }).populate('reviews')
+    let bookedTour=false;
+    // console.log(tour,res.locals.user)
+    if(res.locals.user)
+     bookedTour = await Booking.findOne({tour:tour._id,user:res.locals.user._id})
+    console.log(bookedTour)
+    if(bookedTour) bookedTour=true
     const reviews = tour.reviews
     const guides = tour.guides
     res.status(200).render('tour', {
         title: tour.name,
         tour,
+        bookedTour,
         reviews,
         guides
     })
