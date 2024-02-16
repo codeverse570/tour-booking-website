@@ -3,6 +3,7 @@ import { mapFun } from "./mapbox"
 import { bookTour } from "./stripe"
 import { updateUser, updatePassword } from "./updateUser"
 import { showAlert } from "./alert"
+import {editReview,addReview} from "./review"
 import "@babel/polyfill"
 let form = document.querySelector("#form")
 if (form) {
@@ -78,4 +79,44 @@ if (signUpForm) {
         const email = document.getElementById("email").value
         await signUp({ name, password, passwordConfirm, email })
     })
+}
+
+const reviewForm= document.getElementById("review-form")
+
+if(reviewForm){
+const stars = document.querySelectorAll('.review--star');
+const ratingStar = document.getElementById('ratingStar');
+const reviewButton =document.getElementById('review-button')
+const reviewContent=document.getElementById("review-content")
+console.log(ratingStar.value)
+console.log(stars)
+stars.forEach(function (star, index) {
+  star.addEventListener('click', function () {
+    const rating = index + 1;
+    ratingStar.value = rating;
+    highlightStars(stars,rating);
+  });
+});
+reviewForm.addEventListener("submit",async (e)=>{
+    e.preventDefault()  
+    const rating= ratingStar.value||3
+    const review= reviewContent.textContent
+    const tour= reviewForm.dataset.tour
+    if(e.submitter.classList[0]=='review-submit')
+    await addReview({rating,review,tour})
+    else await editReview({rating,review,tour})
+    ratingStar.value=0
+})
+
+}
+function highlightStars(stars,rating) {
+  stars.forEach(function (star, index) {
+    if (index < rating) {
+      star.classList.add('reviews__star--active');
+      star.classList.remove('reviews__star--inactive');
+    } else {
+      star.classList.remove('reviews__star--active');
+      star.classList.add('reviews__star--inactive');
+    }
+  });
 }

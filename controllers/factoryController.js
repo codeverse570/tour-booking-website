@@ -14,6 +14,7 @@ const deleteDoc=model=>catchAsync(async (req,res)=>{
 }
 )
 const updateDoc= model=>catchAsync(async(req,res,next)=>{
+    console.log(req.body)
     const Doc= await  model.findByIdAndUpdate(req.params.id,req.body,{
         new:true,
         runValidator:true

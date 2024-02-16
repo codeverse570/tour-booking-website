@@ -94,3 +94,44 @@ block content
         btn(data-tour-id=`${tour._id}`).btn.btn--green.span-all-rows Booked Tour!
       else 
          a(href="/login").btn.btn--green.span-all-rows Login Now!
+ if user&&bookedTour&&reviewEligible&&!review
+  .form-container
+    img.review-logo(src='/img/favicon.png', alt='Product Image')
+    
+    .rating-container#ratingContainer
+      each i in [1, 2, 3]
+        .star-container
+          svg.reviews__star.reviews__star--active.review--star
+            use(xlink:href='/img/icons.svg#icon-star')
+      each i in [1,2]
+        .star-container
+          svg.reviews__star.reviews__star--inactive.review--star
+            use(xlink:href='/img/icons.svg#icon-star')         
+    form(data-tour=`${tour._id}`)#review-form
+      input(type='number', id='ratingStar', name='rating', value=0, required)
+      
+      label(for='review') Your Review:
+      
+      .material-input
+        div(contenteditable='true')#review-content
+        span.highlight
+        span.bar
+      if !review
+       button#review-button.review-submit(type='submit') Submit Review
+      else 
+       button#review-button.review-edit(type='submit') Edit Review
+ else if review
+    .reviews__card#my-review
+      .reviews__avatar
+        img.reviews__avatar-img(src=`/img/users/${review.user.photo}`, alt=`${review.user.name}`)
+        h6.reviews__user #{review.user.name}
+      p.reviews__text #{review.review}
+      .reviews__rating
+        for count in Array(review.rating)
+         svg.reviews__star.reviews__star--active
+           use(xlink:href='/img/icons.svg#icon-star')
+        - var remain=5-review.rating
+        while remain>0
+          - remain--
+          svg.reviews__star.reviews__star--inactive 
+            use(xlink:href='/img/icons.svg#icon-star')

@@ -1,6 +1,7 @@
 const catchAsync = require("./errControler").catchAsync
 const Tour = require("./../models/employee")
 const bookingController=require("./../controllers/viewController")
+const Review=require("./../models/reviewSchema")
 const Booking=require("./../models/bookingSchema")
 const overview = catchAsync(async (req, res, next) => {
     const tours = await Tour.find();
@@ -20,17 +21,23 @@ const tour = catchAsync(async (req, res, next) => {
     const tour = await Tour.findOne({ slug: req.params.name }).populate('reviews')
     let bookedTour=false;
     // console.log(tour,res.locals.user)
-    if(res.locals.user)
+    let review;
+    if(res.locals.user){
      bookedTour = await Booking.findOne({tour:tour._id,user:res.locals.user._id})
-    console.log(bookedTour)
+      review= await Review.findOne({user:res.locals.user._id,tour:tour._id})
+    }
+
     if(bookedTour) bookedTour=true
+    let reviewEligible=bookedTour&&(Date.now()>=tour.startDates[tour.startDates.length-1].getTime()+24*60*60*1000)
     const reviews = tour.reviews
     const guides = tour.guides
     res.status(200).render('tour', {
         title: tour.name,
         tour,
         bookedTour,
+        reviewEligible,
         reviews,
+        review,
         guides
     })
 })
