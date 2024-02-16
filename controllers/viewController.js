@@ -64,6 +64,11 @@ module.exports.checkAlert= (req,res,next)=>{
         if(alert) res.locals.alert=alert
         next()
 }
+module.exports.signUp= catchAsync(async (req, res, next) => {
+    res.status(200).render('signup', {
+        title: "create account"
+    })
+})
 module.exports.tour = tour
 module.exports.base = base
 module.exports.overview = overview

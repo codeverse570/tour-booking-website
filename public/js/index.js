@@ -1,6 +1,6 @@
-import { logIn, logout } from "./login"
+import { logIn, logout, signUp } from "./login"
 import { mapFun } from "./mapbox"
-import {bookTour} from "./stripe"
+import { bookTour } from "./stripe"
 import { updateUser, updatePassword } from "./updateUser"
 import { showAlert } from "./alert"
 import "@babel/polyfill"
@@ -10,7 +10,7 @@ if (form) {
         e.preventDefault()
         let email = document.getElementById("email").value
         let password = document.getElementById("password").value
-    
+
         logIn(email, password)
     })
 }
@@ -44,7 +44,7 @@ const passwordForm = document.getElementById('password-form')
 if (passwordForm) {
     // console.log("hello")
     passwordForm.addEventListener("submit", (e) => {
-      
+
         e.preventDefault()
 
         const currentPassword = document.getElementById("password-current")
@@ -53,16 +53,29 @@ if (passwordForm) {
         updatePassword(currentPassword, Password, confirmPassword)
     })
 }
-const bookBtn= document.getElementById("booktour");
-if(bookBtn){
-     bookBtn.addEventListener("click",async(e)=>{
-           e.target.innerText="Processing..."
-           await bookTour(e.target.dataset.tourId)
-           e.target.innerText="Book Tour Now!"
-     })
+const bookBtn = document.getElementById("booktour");
+if (bookBtn) {
+    bookBtn.addEventListener("click", async (e) => {
+        e.target.innerText = "Processing..."
+        await bookTour(e.target.dataset.tourId)
+        e.target.innerText = "Book Tour Now!"
+    })
 }
-const alert= document.querySelector('body').dataset.alert
+const alert = document.querySelector('body').dataset.alert
 // console.log(alert)
-if(alert==="booking"){
-    showAlert("success","Congrats! Tour is booked")
+if (alert === "booking") {
+    showAlert("success", "Congrats! Tour is booked")
+}
+const signUpForm = document.getElementById("signform")
+console.log(signUpForm)
+if (signUpForm) {
+    signUpForm.addEventListener("submit", async (e) => {
+        e.preventDefault()
+        console.log("hello")
+        const name = document.getElementById("name").value
+        const password = document.getElementById("password").value
+        const passwordConfirm = document.getElementById("passwordConfirm").value
+        const email = document.getElementById("email").value
+        await signUp({ name, password, passwordConfirm, email })
+    })
 }

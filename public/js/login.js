@@ -41,3 +41,21 @@ export const logout = async () => {
         showAlert("error", err.response.data.message)
     }
 }
+export const signUp= async(user)=>{
+    try {
+        console.log('sign')
+        const res = await axios({
+            method: "Post",
+            url: "/api/user/signup",
+            data: user
+        })
+        if (res.data.message === "success") {
+            showAlert(res.data.message, "Account Created!")
+            window.location.assign('/')
+        }
+    }
+    catch (err) {
+        console.log(err)
+        showAlert("error", err.response.data.message)
+    }
+}
