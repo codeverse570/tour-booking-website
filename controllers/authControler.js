@@ -101,12 +101,8 @@ const isLogIn = catchAsync(async (req, res, next) => {
 
   if (!newUser) return next()
   if (newUser.isPassUpdate(payload.iat)) return next()
-    .log(newUser)
   res.locals.user = newUser
   next()
-
-
-
 
 }
 )
