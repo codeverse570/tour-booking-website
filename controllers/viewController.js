@@ -35,9 +35,11 @@ const tour = catchAsync(async (req, res, next) => {
     })
 })
 const logIn = catchAsync(async (req, res, next) => {
+    console.log("entering")
     res.status(200).render('login', {
         title: "Log In"
     })
+    console.log("exiting")
 })
 const getMe = catchAsync(async (req, res, next) => {
     res.status(200).render('user', {
