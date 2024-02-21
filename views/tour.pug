@@ -91,7 +91,7 @@ block content
        if !bookedTour
         btn(data-tour-id=`${tour._id}`)#booktour.btn.btn--green.span-all-rows Book tour now!
        else 
-        btn(data-tour-id=`${tour._id}`).btn.btn--green.span-all-rows Booked Tour!
+        a(data-tour-id=`${tour._id}` href=`/download-invoice/${tour._id}`).btn.btn--green.span-all-rows Download Invoice!
       else 
          a(href="/login").btn.btn--green.span-all-rows Login Now!
  if user&&bookedTour&&reviewEligible&&!review

@@ -1,0 +1,107 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Invoice
+    style.
+      body {
+        font-family: Arial,san-sarif ;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+        height: 90vh;
+        position:relative;
+        top:-15px;
+      }
+
+      .invoice-container {
+        max-width: 100%; /* A4 size width */
+        margin: 20px auto;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .logo {
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 10px;
+        background: rgba(255, 255, 255, 0.7); /* Adjust the background color and opacity */
+      }
+
+      .invoice-details {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+      }
+
+      .invoice-details div {
+        flex: 1;
+      }
+
+      .item-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+      }
+
+      .item-table th,
+      .item-table td {
+        border: 1px solid #ddd;
+        padding: 8px; /* Reduced padding */
+        text-align: left;
+      }
+
+      .total {
+        text-align: right;
+        font-weight: bold;
+      }
+
+      .footer {
+        margin-top: 20px;
+        text-align: center;
+      }
+
+  body
+    .invoice-container
+      .header
+        img.logo(src=`data:image/jpeg;base64,${logo}`, alt="Company Logo")
+        h1 Invoice
+      .invoice-details
+        div
+          p From:
+          p Patel Tourism
+          p 123 Main Street
+          p Indore, MP
+        div
+          p To:
+          p #{booking.user.name}
+          p 456 Business Avenue
+          p City, State 67890
+        div
+          p Invoice #: 12345
+          p Date: #{booking.createdAt}
+      table.item-table
+        thead
+          tr
+            th Description
+            th Quantity
+            th Unit Price
+            th Total
+        tbody
+          tr
+            td #{booking.tour.name} Tour
+            td 1
+            td $#{booking.tour.price}
+            td $#{booking.tour.price}
+      .total
+        p Total: $#{booking.tour.price}
+      .footer
+        p Thank you for your business!

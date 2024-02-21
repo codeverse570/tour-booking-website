@@ -14,6 +14,7 @@ const Userroute = require("./Routes/User")
 const bookingroute=require("./Routes/booking")
 const bookingController=require("./controllers/bookingControler")
 const mongoose = require('mongoose') 
+const authControler=require("./controllers/authControler")
 const errorHandler = require('./controllers/errControler').errorHandler
 const helmet = require("helmet")
 const viewsroute = require("./Routes/view")
@@ -23,6 +24,7 @@ const cookieparse = require("cookie-parser")
 const xss = require("xss-clean")
 const hpp = require("hpp")
 const compression= require("compression")
+
 app.enable("trust proxy")
 app.post("/booking/check-out",express.raw({type:'application/json'}),bookingController.checkOut)
 app.use(express.json({ limit: '10kb' }))
@@ -90,7 +92,7 @@ app.use(hpp({
 
 // console.log(process.env.DATABASE) 
 const limiter = rateLimiter({
-    max: 30,
+    max: 100,
     windowMs: 60 * 60 * 1000,
     message: "Too many requests please try later"
 })
@@ -112,6 +114,7 @@ mongoose.connect("mongodb+srv://patel36:neeraj@cluster0.gblkjv7.mongodb.net/?ret
     console.log("DB connection successful")
 })
 // check
+app.use("/download-invoice/:id",authControler.isLogIn,bookingController.downloadInvoice)
 app.use('/', viewsroute)
 app.use('/api/user', Userroute);
 app.use('/api/review', reviewroute);

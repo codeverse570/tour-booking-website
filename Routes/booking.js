@@ -5,6 +5,7 @@ const authControler = require("../controllers/authControler")
 const review=require(".././Routes/review")
 const router = express.Router();
 router.route("/getpaymentsession/:tourId").get(authControler.checkLog,bookingController.getPaymentSession)
+// router.use("/download-invoice/:id",bookingController.downloadInvoice)
 router.use(authControler.checkLog,authControler.restrictTo("admin"))
 router.route("/createbooking").post(bookingController.createOffBookings)
 router.route("/getallbooking").get(bookingController.getAllBookings)
