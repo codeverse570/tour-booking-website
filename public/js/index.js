@@ -1,7 +1,7 @@
 import { logIn, logout, signUp } from "./login"
 import { mapFun } from "./mapbox"
 import { bookTour } from "./stripe"
-import { updateUser, updatePassword } from "./updateUser"
+import { updateUser, updatePassword, forgetPassword,resetPassword} from "./updateUser"
 import { showAlert } from "./alert"
 import {editReview,addReview} from "./review"
 import "@babel/polyfill"
@@ -119,4 +119,27 @@ function highlightStars(stars,rating) {
       star.classList.add('reviews__star--inactive');
     }
   });
+}
+const forgetPassForm =document.getElementById("forgetPassForm")
+// console.log(forgetPassForm)
+if(forgetPassForm){
+    // console.log('hello')
+     let email = document.getElementById("email")
+     forgetPassForm.addEventListener("submit", async(e)=>{
+        e.preventDefault()
+        email=email.value
+        
+        await forgetPassword(email)
+     })
+}
+const resetPasswordForm =document.getElementById("resetPasswordForm")
+if(resetPasswordForm){
+  resetPasswordForm.addEventListener("submit",async(e)=>{
+       e.preventDefault()
+       const password= document.getElementById("password").value
+       const passwordConfirm= document.getElementById("confirmPassword").value
+       const token= e.target.dataset.token
+    //    console.log(password,passwordConfirm)
+       await resetPassword({password,passwordConfirm},token)
+    })
 }

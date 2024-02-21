@@ -118,12 +118,13 @@ const restrictTo = (...roles) => {
 }
 const forgetPassword = catchAsync(async (req, res, next) => {
   const { email } = req.body
+  console.log(email)
   const user = await User.findOne({ email })
   if (!user) next(new appError("failed", "No such User found"))
   const token = user.generateResetPasswordToken()
 
 
-  const resetUrl = `${req.protocol}://${req.hostname}:3000/api/user/resetpassword/${token}`
+  const resetUrl = `${req.protocol}://${req.hostname}:3000/resetpassword/${token}`
   try {
     await new Email(user, resetUrl).sendResetPassword()
     res.status(200).json({
@@ -144,6 +145,7 @@ const forgetPassword = catchAsync(async (req, res, next) => {
   user.save({ validateBeforeSave: false })
 })
 const resetPassword = catchAsync(async (req, res, next) => {
+  console.log(req.body)
   const { currentPassword, password, passwordConfirm } = req.body
   const token = req.params.token
   const hashtoken = crypto.createHash('sha256').update(token).digest("hex")

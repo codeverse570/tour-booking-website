@@ -1,0 +1,181 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Natours|#{title}
+    link(rel='shortcut icon' type= '/image/png' href='/img/favicon.png')
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap")
+    script(src="https://js.stripe.com/v3/")
+    script(src="/css/style.css") 
+    style.
+            .alert {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        z-index: 9999;
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 400;
+        text-align: center;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 1.2rem 15rem;
+        -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+        box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+        }
+        .alert--success {
+        background-color: #20bf6b;
+        }
+        .alert--error {
+        background-color: #eb4d4b;
+        }
+      body {
+        font-family: 'Open Sans', sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+
+      .container {
+        position: relative;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        width: 20%;
+        padding: 40px;
+      }
+
+      h1 {
+        text-align: center;
+        color: rgba(85, 148, 69, 0.8);
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      h1::before {
+        content: '';
+        position: absolute;
+        top: -40%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 85%;
+        height: 2px;
+        background-color: #e82020;
+        z-index: -1;
+      }
+
+      img {
+        display: block;
+        margin: 0 auto;
+        width: 80px;
+        margin-bottom: 20px;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      label {
+        margin-bottom: 10px;
+        margin-top: 10px;
+        color: #555;
+        font-weight: bolder;
+        font-size: 16px;
+      }
+
+      #redirect-a {
+        display: inline-block;
+        position: relative;
+        text-decoration: none;
+        color: inherit;
+        z-index: 1;
+        font-size: small;
+      }
+
+      #redirect-a::after {
+        content: '';
+        position: absolute;
+        left: 0;
+        bottom: .07em;
+        height: .1em;
+        width: 100%;
+        background: linear-gradient(110deg, #e1f549, #29d0be, #6cb8ea, #ff5959);
+        z-index: -1;
+        transition: height 0.25s cubic-bezier(.6,0,.4,1);
+      }
+
+      #redirect-a:hover::after {
+        height: .2em;
+      }
+
+      input {
+        padding: 12px;
+        margin-bottom: 35px;
+        border: 1px solid #aaa;
+        border-radius: 6px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #4caf50;
+        box-shadow: 0 0 10px rgba(76, 175, 80, 0.6);
+      }
+
+      button {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-size: 16px;
+      }
+
+      button:hover {
+        background-color: #45a049;
+      }
+
+      a {
+        text-align: center;
+        margin-top: 20px;
+        color: #4caf50;
+        display: block;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      a:hover {
+        color: #45a049;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 80%;
+        }
+      }
+
+  body
+
+    .container
+      img(src="/img/favicon.png", alt="Decorative Logo")
+      h1 Forgot Password
+      form#forgetPassForm
+        label(for="email") Email
+        input#email(type="email", name="email", required)
+        button(type="submit") Reset Password
+      a(href="/login") Back to Login
+    script(src="/js/bundle.js")

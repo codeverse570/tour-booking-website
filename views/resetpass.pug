@@ -1,0 +1,140 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Natours| #{title}
+    script(src="https://js.stripe.com/v3/")
+    style.
+      body {
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          /* background: linear-gradient(135deg, #3498db, #8e44ad); */
+          color: #fff;
+          font-family: Arial, sans-serif;
+      }
+            .alert {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        z-index: 9999;
+        color: #fff;
+        font-size: 1.2rem;
+        font-weight: 400;
+        text-align: center;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 1.2rem 15rem;
+        -webkit-box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+        box-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.25);
+        }
+        .alert--success {
+        background-color: #20bf6b;
+        }
+        .alert--error {
+        background-color: #eb4d4b;
+        }
+      .reset-container {
+          background-color: rgba(255, 255, 255, 0.9);
+          border-radius: 8px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          padding: 20px;
+          width: 400px;
+          text-align: center;
+      }
+
+      .reset-container h2 {
+          color: #333;
+      }
+
+      .form-group {
+          margin-bottom: 20px;
+          text-align: left;
+          font-weight: 600;
+      }
+
+      label {
+          display: block;
+          margin-bottom: 8px;
+          color: #555;
+      }
+
+      input {
+          width: 100%;
+          padding: 10px;
+          box-sizing: border-box;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+          margin-top: 5px;
+      }
+
+      .btn {
+          background-color: #4caf50;
+          color: #fff;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 4px;
+          cursor: pointer;
+      }
+
+      .btn:hover {
+          background-color: #45a049;
+      }
+
+      .logo-container {
+          text-align: center;
+      }
+
+      .logo {
+          width: 150px;
+          height: auto;
+          margin-bottom: 0px;
+      }
+
+      h2 {
+          font-size: 24px;
+          margin-bottom: 40px;
+          font-family: 'Courier New', monospace;
+      }
+
+      input {
+          width: 100%;
+          padding: 10px;
+          box-sizing: border-box;
+          border: 3px solid #ddd;
+          border-radius: 4px;
+          margin-top: 5px;
+          outline: none;
+          /* Remove default outline on focus */
+          transition: border-color 0.3s ease-in-out;
+          /* Add a smooth transition effect for border color */
+      }
+
+      input:focus {
+          border-color: #4caf50;
+          /* Change border color on focus */
+      }
+
+  body
+    .reset-container
+      .logo-container
+        img(src="/img/favicon.png", alt="Logo", class="logo")
+
+      h2 Password Reset
+      form#resetPasswordForm(data-token=`${token}`)
+        .form-group
+          label(for="password") New Password
+          input(type="password", id="password", name="password", required)
+
+        .form-group
+          label(for="confirmPassword") Confirm Password
+          input(type="password", id="confirmPassword", name="confirmPassword", required)
+
+        button.btn(type="submit") Reset Password
+        script(src="/js/bundle.js")

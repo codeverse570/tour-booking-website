@@ -2,7 +2,10 @@ const catchAsync = require("./errControler").catchAsync
 const Tour = require("./../models/employee")
 const bookingController=require("./../controllers/viewController")
 const Review=require("./../models/reviewSchema")
+const User=require("./../models/userSchema")
 const Booking=require("./../models/bookingSchema")
+const crypto =require("crypto")
+const appError= require("./../utils/appError")
 const overview = catchAsync(async (req, res, next) => {
     const tours = await Tour.find();
     res.status(200).render('overview', {
@@ -66,8 +69,27 @@ const bookedTours=catchAsync(async(req,res,next)=>{
         return next(new appError("No booked Tours! book one now"))
      }
 })
+module.exports.resetPassword = catchAsync(async(req,res,next)=>{
+     const token= req.params.token
+     const hashtoken = crypto.createHash('sha256').update(token).digest("hex")
+     const user = await User.findOne({ resetPasswordToken: hashtoken })
+     if(!user) return next(new appError("failed", "invalid token"))
+     const currentDate = Date.now()
+     if (currentDate > user.resetTokenExpiresAt) {
+        return next(new appError("Failed", "Link is expired please try again"))
+     }
+    res.status(200).render("resetpass",{
+      title:"Reset Password",
+      token
+   })
+})
+module.exports.getForgetPassPage= (req,res,next)=>{
+    res.status(200).render("forgetpass",{
+        title:"Forget Password"
+    })
+}
 module.exports.checkAlert= (req,res,next)=>{
-    console.log(req.query)
+    
         const alert= req.query.alert
         console.log(req.locals)
         if(alert) res.locals.alert=alert

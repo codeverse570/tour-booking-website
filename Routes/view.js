@@ -10,6 +10,7 @@ router.get("/login", viewController.logIn)
 router.get("/signup",viewController.signUp)
 router.get("/mytours",authController.checkLog,viewController.checkAlert,viewController.bookedTours)
 router.get("/me", authController.checkLog, authController.isLogIn, viewController.getMe)
-
+router.get("/forget-password",viewController.getForgetPassPage)
+router.get("/resetpassword/:token",viewController.resetPassword)
 
 module.exports = router
