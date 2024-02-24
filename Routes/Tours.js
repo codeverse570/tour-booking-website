@@ -7,7 +7,7 @@ route.route('/getMonthlyPlan/:year').get(authControler.checkLog,employee.montlyP
 route.route('/getTourStats').get(employee.tourStats)
 route.route('/tour-within/:distance/center/:cord/unit/:unit').get(employee.tourWithin)
 route.route('/distances/center/:cord/unit/:unit').get(employee.distances)
-route.route('/').get(authControler.checkLog, employee.getEmployee).post(employee.addEmployee)
+route.route('/').get( employee.getEmployee).post(employee.addEmployee)
 route.route('/:id').patch(authControler.checkLog,authControler.restrictTo("admin","lead-guide"),employee.uploadPhoto,employee.resizeTourImages,employee.updateEmployee)
 route.route('/:id').delete(authControler.checkLog, authControler.restrictTo('admin', 'lead-guide'), employee.deleteTour)
 route.route('/:id').get(employee.getByName)

@@ -92,28 +92,17 @@ const postmiddle = (req, res, next) => {
 }
 
 const getByName = factoryController.getOne(employee, { path: "reviews" })
-const getMontlyPlan = catchAsync(async (req, res) => {
-
-
-
+const getMontlyPlan = catchAsync(async (req, res,next) => {
   let year = req.params.year * 1
-
   let monthly = await employee.aggregate([
 
     {
       $unwind: "$startDates"
     },
     {
-      $match: {
-        startDates: {
-          $gte: new Date(`${year}-01-01`),
-          $lte: new Date(`${year}-12-31`)
-        }
-      }
-    },
-    {
       $group: {
         _id: { $month: "$startDates" },
+        totalRatings:{$sum:"$ratingsQuantity"},
         count: { $sum: 1 },
         tours: { $push: "$name" }
       }
@@ -140,8 +129,6 @@ const distances = catchAsync(async (req, res, next) => {
   const [lati, longi] = req.params.cord.split(",")
   const unit = req.params.unit
   if (!longi || !lati) return next(new appError("failed", "please specify the coordinate of center"))
-
-
   const tour = await employee.aggregate([
     {
       $geoNear: {

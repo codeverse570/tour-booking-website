@@ -2,6 +2,7 @@ class apiFeatures {
     constructor(query, queryString) {
         this.tours = query
         this.queryString = queryString
+        console.log(queryString)
     }
     filter() {
         let queryobj = this.queryString;
@@ -22,7 +23,9 @@ class apiFeatures {
     }
     fields() {
         let queryobj = JSON.parse(this.queryString)
+        console.log(queryobj.fields)
         if (queryobj.fields) {
+          
             this.tours = this.tours.select(queryobj.fields.replaceAll(",", " "))
         }
         else {

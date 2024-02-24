@@ -143,3 +143,130 @@ if(resetPasswordForm){
        await resetPassword({password,passwordConfirm},token)
     })
 }
+// SIDEBAR TOGGLE
+const barChartDiv= document.getElementById("bar-chart")
+
+let sidebarOpen = false;
+const sidebar = document.getElementById('sidebar');
+if(sidebar){
+function openSidebar() {
+  if (!sidebarOpen) {
+    sidebar.classList.add('sidebar-responsive');
+    sidebarOpen = true;
+  }
+}
+
+function closeSidebar() {
+  if (sidebarOpen) {
+    sidebar.classList.remove('sidebar-responsive');
+    sidebarOpen = false;
+  }
+}
+}
+
+// ---------- CHARTS ----------
+
+// BAR CHART
+if(barChartDiv){
+const tourData= JSON.parse(barChartDiv.dataset.topTours)
+// console.log(tourData)
+let ratingData=[]
+let tourName=[]
+ tourData.forEach( tour=>{
+      ratingData.push(Math.round(tour.ratingAverage*100)/100)
+      tourName.push(tour.name)
+ })
+const barChartOptions = {
+  series: [
+    { 
+      name:"rating",
+      data: ratingData,
+    },
+  ],
+  chart: {
+    type: 'bar',
+    height: 350,
+    toolbar: {
+      show: false,
+    },
+  },
+  colors: ['#246dec', '#cc3c43', '#367952', '#f5b74f', '#4f35a1'],
+  plotOptions: {
+    bar: {
+      distributed: true,
+      borderRadius: 4,
+      horizontal: false,
+      columnWidth: '40%',
+    },
+  },
+  dataLabels: {
+    enabled: false,
+  },
+  legend: {
+    show: true,
+  },
+  xaxis: {
+    categories: tourName,
+  },
+  yaxis: {
+    title: {
+      text: 'Avg Rating',
+    },
+  },
+};
+
+const barChart = new ApexCharts(
+  document.querySelector('#bar-chart'),
+  barChartOptions
+);
+barChart.render();
+}
+const areaChartDiv= document.getElementById("area-chart")
+// AREA CHART
+if(areaChartDiv){
+let monthWiseTour;
+let monthStats= JSON.parse(areaChartDiv.dataset.tourInMonth)
+// console.log(monthStats)
+monthWiseTour= monthStats.map(data=> data.count)
+const areaChartOptions = {
+  series:[
+    {
+      name: 'Tours',
+      data: monthWiseTour,
+    }
+]
+  ,
+  chart: {
+    height: 350,
+    type: 'area',
+    toolbar: {
+      show: false,
+    },
+  },
+  colors: ['#4f35a1'],
+  dataLabels: {
+    enabled: false,
+  },
+  stroke: {
+    curve: 'smooth',
+  },
+  labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul','Aug','Sep','Oct','Nov','Dec'],
+  markers: {
+    size: 0,
+  },
+  yaxis: {
+      title: {
+        text: 'Total Tours',
+      },
+      min:0,
+      max:Math.max(...monthWiseTour)+1,
+      tickAmount:Math.max(...monthWiseTour)+1
+  }
+};
+const areaChart = new ApexCharts(
+  document.querySelector('#area-chart'),
+  areaChartOptions
+);
+areaChart.render();
+
+}

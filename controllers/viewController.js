@@ -95,6 +95,45 @@ module.exports.checkAlert= (req,res,next)=>{
         if(alert) res.locals.alert=alert
         next()
 }
+module.exports.getStats = catchAsync(async(req,res,next)=>{
+    let monthly = await Tour.aggregate([
+        {
+          $unwind: "$startDates"
+        },
+        {
+          $group: {
+            _id: { $month: "$startDates" },
+            totalRatings:{$sum:"$ratingsQuantity"},
+            count: { $sum: 1 },
+            tours: { $push: "$name" }
+          }
+        }
+        ,
+        {
+          $sort: {
+            _id: 1
+          }
+        }
+    
+      ]
+      )
+      let totalTours= await Tour.estimatedDocumentCount();
+      let bookingStats =await Booking.aggregate([{
+        $group:{
+            _id:null,
+            count:{$sum:1},
+            revenue:{$sum:"$price"}
+        }
+      }])
+      let topTours =await Tour.find().select("name ratingAverage").sort("-ratingAverage").limit(8)
+      res.status(200).render("admin",{
+        user: res.locals.user,
+        totalTours,
+        bookingStats,
+        topTours,
+        monthly
+      })
+})
 module.exports.signUp= catchAsync(async (req, res, next) => {
     res.status(200).render('signup', {
         title: "create account"

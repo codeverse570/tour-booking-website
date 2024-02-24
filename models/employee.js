@@ -91,10 +91,6 @@ const ToursS = new mongoose.Schema({
 })
 ToursS.index({price:1,duration:-1})
 ToursS.index({startLocation:"2dsphere"})
-// ToursS.pre("save",async function(next){
-//       this.guides =await Promise.all(this.guides.map( async el=> await User.findById(el)))
-//        next()
-// })
 ToursS.virtual('reviews', {
     ref: 'review',
     foreignField: 'tour',
@@ -104,7 +100,7 @@ ToursS.pre("save",function(next){
   this.slug=slug(this.name)
   next()
 })
-ToursS.pre(/^find/, function (next) {
+ToursS.pre(/^findOne/, function (next) {
     this.populate({
         path: "guides",
         select: "-active"
