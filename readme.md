@@ -1,5 +1,5 @@
 # tour booking application
 built using nodeJs Express mongoose mongoDB
 
-#live demo
+# live demo
 https://tourer-io.onrender.com
